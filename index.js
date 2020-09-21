@@ -63,6 +63,7 @@ MongoClient.connect(
             time: req.body.time,
             RPM: req.body.kc,
           });
+          console.log("CreatedSuccess : RPM more than incident:1000");
 
           // console.log(req.body);
           if (!logged) {
