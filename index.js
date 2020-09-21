@@ -58,7 +58,7 @@ MongoClient.connect(
         }).then((rule) => {
           return rule;
         });
-        // let rule = rules.incidentValue;
+        let rule = rules.incidentValue;
         // let ruleInt = parseFloat(rule);
         // let kc = parseFloat(req.body.kc);
         // let RPM = kc;
