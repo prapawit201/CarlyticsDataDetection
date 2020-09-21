@@ -36,13 +36,13 @@ MongoClient.connect(
       try {
         const rules = await Incident.findOne({
           where: {
-            incidentName: "RPM",
+            incidentValue: "700",
           },
         }).then((rule) => {
           return rule;
         });
 
-        if (req.body.v >= rules.incidentValue) {
+        if (req.body.v > rules.incidentValue) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
             long: req.body.kff1005,
