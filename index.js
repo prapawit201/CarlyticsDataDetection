@@ -42,14 +42,14 @@ MongoClient.connect(
           return rule;
         });
 
-        if (req.body.kc >= rules) {
+        if (req.body.kc >= rules.incidentValue) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
             long: req.body.kff1005,
             time: req.body.time,
             RPM: req.body.kc,
           });
-          console.log(rules);
+          console.log("Rule : " + rules);
           // console.log(req.body);
           if (!logged) {
             res.send("error cannot create logged");
@@ -58,7 +58,7 @@ MongoClient.connect(
           console.log("Error cannot Created");
         }
 
-        console.log(req.body);
+        console.log("kc : " + req.body.kc);
         res.send("ok record Logged");
       } catch (e) {
         console.log(e);
