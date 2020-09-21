@@ -42,7 +42,7 @@ MongoClient.connect(
           return rule;
         });
 
-        if (req.body.kc > rules.incidentValue) {
+        if (req.body.kc >= rules.incidentValue) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
             long: req.body.kff1005,
