@@ -58,11 +58,11 @@ MongoClient.connect(
         }).then((rule) => {
           return rule;
         });
-        let rule = rules.incidentValue;
-        let ruleInt = parseFloat(rule);
-        let kc = parseFloat(req.body.kc);
-        let RPM = kc;
-        if (RPM > ruleInt) {
+        // let rule = rules.incidentValue;
+        // let ruleInt = parseFloat(rule);
+        // let kc = parseFloat(req.body.kc);
+        // let RPM = kc;
+        if (req.body.kc > rule) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
             long: req.body.kff1005,
@@ -75,7 +75,7 @@ MongoClient.connect(
           if (!logged) {
             res.send("error cannot create logged");
           }
-        } else if (RPM < ruleInt) {
+        } else if (req.body.kc < rule) {
           console.log("Error cannot Created : RPM less than incident:1000");
         } else {
           console.log("Error cannot Created");
