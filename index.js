@@ -34,7 +34,6 @@ MongoClient.connect(
 
     app.post("/fetchData", async (req, res) => {
       try {
-        // Fetch Rules
         const rules = await Incident.findOne({
           where: {
             incidentName: "RPM",
