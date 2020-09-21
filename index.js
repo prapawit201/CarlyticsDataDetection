@@ -57,9 +57,9 @@ MongoClient.connect(
           return rule;
         });
         const rule = rules.incidentValue;
-        const ruleInt = INTEGER.parseINT(rule);
+        // const ruleInt = INTEGER.parseINT(rule);
         const RPM = INTEGER.parseINT(req.body.kc);
-        if (RPM > ruleInt) {
+        if (RPM > rule) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
             long: req.body.kff1005,
@@ -77,7 +77,7 @@ MongoClient.connect(
         }
 
         console.log("kc : " + RPM);
-        console.log("rule : " + ruleInt);
+        console.log("rule : " + rule);
         res.send("ok record Logged");
       } catch (e) {
         console.log(e);
