@@ -73,7 +73,7 @@ MongoClient.connect(
         }
 
         console.log("kc : " + req.body.kc);
-        console.log("rule : " + object);
+        console.log("rule : " + rule);
         res.send("ok record Logged");
       } catch (e) {
         console.log(e);
