@@ -36,7 +36,7 @@ MongoClient.connect(
       try {
         const rules = await Incident.findOne({
           where: {
-            incidentValue: "700",
+            incidentName: "RPM",
           },
         }).then((rule) => {
           return rule;
