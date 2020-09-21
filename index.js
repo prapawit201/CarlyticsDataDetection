@@ -64,7 +64,7 @@ MongoClient.connect(
             lat: req.body.kff1006,
             long: req.body.kff1005,
             time: req.body.time,
-            RPM: req.body.kc,
+            RPM: "" + req.body.kc,
           });
           console.log("CreatedSuccess : RPM more than incident:1000");
 
