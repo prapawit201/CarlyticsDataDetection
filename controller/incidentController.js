@@ -7,7 +7,6 @@ sequelize.sync();
 
 controllers.create = async (req, res) => {
   // data
-  // const { incidentId,incidentName, incidentValue,enterpriseId } = req.body;
   let token = req.headers["authorization"];
   let decode = jwtToken.verify(token, "CarlyTicAuthorizedKey");
   console.log(token);
