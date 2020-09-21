@@ -57,9 +57,9 @@ MongoClient.connect(
           return rule;
         });
         const rule = rules.incidentValue;
-        // const ruleInt = INTEGER.parseINT(rule);
-        const RPM = INTEGER.parseINT(req.body.kc);
-        if (RPM > rule) {
+        const ruleInt = parseINT(rule);
+        const RPM = parseINT(req.body.kc);
+        if (RPM > ruleInt) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
             long: req.body.kff1005,
