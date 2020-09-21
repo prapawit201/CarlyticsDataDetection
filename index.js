@@ -57,14 +57,14 @@ MongoClient.connect(
           return rule;
         });
         const rule = rules.incidentValue;
-        const ruleInt = parseINT(rule);
-        const RPM = parseINT(req.body.kc);
-        if (RPM > ruleInt) {
+        // const ruleInt = parseINT(rule);
+        // const RPM = parseINT(req.body.kc);
+        if (req.body.kc > rule) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
             long: req.body.kff1005,
             time: req.body.time,
-            RPM: "" + req.body.kc,
+            RPM: req.body.kc,
           });
           console.log("CreatedSuccess : RPM more than incident:1000");
 
@@ -76,7 +76,7 @@ MongoClient.connect(
           console.log("Error cannot Created : RPM less than incident:1000");
         }
 
-        console.log("kc : " + RPM);
+        console.log("kc : " + req.body.kc);
         console.log("rule : " + rule);
         res.send("ok record Logged");
       } catch (e) {
