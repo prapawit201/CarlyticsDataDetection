@@ -69,7 +69,7 @@ MongoClient.connect(
             res.send("error cannot create logged");
           }
         } else if (req.body.kc <= rule) {
-          console.log("Error cannot Created : RPM less than incident");
+          console.log("Error cannot Created : RPM less than incident:1000");
         }
 
         console.log("kc : " + req.body.kc);
