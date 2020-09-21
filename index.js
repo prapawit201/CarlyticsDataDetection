@@ -22,9 +22,10 @@ MongoClient.connect(
     app.get("/", (req, res) => {
       res.send("Hello World, Carlytic MongoToReact1");
     });
+    app.use(MySQL);
 
     app.get("/data", function (req, res, next) {
-      db.collection("userTest")
+      db.collection("test5")
         .find({})
         .toArray((err, result) => {
           if (err) throw err;
@@ -32,24 +33,37 @@ MongoClient.connect(
         });
     });
 
+    // app.get("/getdata", async (req, res) => {
+    //   const rules = await Incident.findOne({
+    //     where: {
+    //       incidentName: "RPM",
+    //     },
+    //   }).then((rule) => {
+    //     res.send("Hello World, Incident MongoToReact");
+    //     return rule;
+    //   });
+    //   const rule = rules.incidentValue;
+    //   console.log(rules);
+    //   console.log("rule 2 :" + rule);
+    // });
     app.post("/fetchData", async (req, res) => {
       try {
         const rules = await Incident.findOne({
           where: {
-            incidentValue: "1000",
+            incidentName: "RPM",
           },
         }).then((rule) => {
           return rule;
         });
-
-        if (req.body.kc >= rules.incidentValue) {
+        const rule = rules.incidentValue;
+        if (req.body.kc >= rule) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
             long: req.body.kff1005,
             time: req.body.time,
             RPM: req.body.kc,
           });
-          console.log("Rule : " + rules);
+          // console.log("Rule : " + rules);
           // console.log(req.body);
           if (!logged) {
             res.send("error cannot create logged");
@@ -59,6 +73,7 @@ MongoClient.connect(
         }
 
         console.log("kc : " + req.body.kc);
+        console.log("rule : " + object);
         res.send("ok record Logged");
       } catch (e) {
         console.log(e);

@@ -5,6 +5,20 @@ var Incident = require("../model/Incident");
 const controllers = {};
 sequelize.sync();
 
+controllers.get = async (req, res) => {
+  const { incidentId } = req.params;
+  const data = await Incident.findAll({
+    where: { incidentId: incidentId },
+  })
+    .then(function (data) {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+  res.json({ success: true, data: data });
+};
+
 controllers.create = async (req, res) => {
   // data
   // const { incidentId,incidentName, incidentValue,enterpriseId } = req.body;
@@ -35,9 +49,9 @@ controllers.create = async (req, res) => {
 
 controllers.list = async (req, res) => {
   const data = await Incident.findAll({
-    where: {
-      incidentName: "test1",
-    },
+    // where: {
+    //   incidentName: "test1",
+    // },
   })
     .then(function (data) {
       return data;
