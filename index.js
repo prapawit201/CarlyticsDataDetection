@@ -68,8 +68,8 @@ MongoClient.connect(
           if (!logged) {
             res.send("error cannot create logged");
           }
-        } else if (req.body.v != rules.incidentName) {
-          console.log("Error cannot Created");
+        } else if (req.body.kc <= rule) {
+          console.log("Error cannot Created : RPM less than incident");
         }
 
         console.log("kc : " + req.body.kc);
