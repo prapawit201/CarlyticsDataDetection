@@ -43,11 +43,12 @@ MongoClient.connect(
     //     return rule;
     //   });
     //   let rule = rules.incidentValue;
-    //   let ruleInt = Number(rule);
+    //   let ruleInt = parseFloat(rule);
     //   console.log("rule 2 :" + rule + "INT : " + ruleInt);
     //   console.log(typeof ruleInt);
     //   console.log(typeof rule);
     // });
+
     app.post("/fetchData", async (req, res) => {
       try {
         const rules = await Incident.findOne({
@@ -57,10 +58,10 @@ MongoClient.connect(
         }).then((rule) => {
           return rule;
         });
-        const rule = rules.incidentValue;
-        const ruleInt = Number(rule);
-        const kc = Number(req.body.kc);
-        const RPM = kc;
+        let rule = rules.incidentValue;
+        let ruleInt = parseFloat(rule);
+        let kc = parseFloat(req.body.kc);
+        let RPM = kc;
         if (RPM > ruleInt) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
