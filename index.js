@@ -7,6 +7,7 @@ let sequelize = require("./database/Db");
 const MySQL = require("./routes/MySQL");
 let Incident = require("./model/Incident");
 let Logged = require("./model/LoggedTest");
+const { INTEGER } = require("sequelize/types");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -56,7 +57,9 @@ MongoClient.connect(
           return rule;
         });
         const rule = rules.incidentValue;
-        if (req.body.kc > rule) {
+        const ruleInt = INTEGER.parseINT(rule);
+        const RPM = INTEGER.parseINT(req.body.kc);
+        if (RPM > ruleInt) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
             long: req.body.kff1005,
@@ -73,8 +76,8 @@ MongoClient.connect(
           console.log("Error cannot Created : RPM less than incident:1000");
         }
 
-        console.log("kc : " + req.body.kc);
-        console.log("rule : " + rule);
+        console.log("kc : " + RPM);
+        console.log("rule : " + ruleInt);
         res.send("ok record Logged");
       } catch (e) {
         console.log(e);
