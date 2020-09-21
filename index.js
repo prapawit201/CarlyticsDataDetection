@@ -7,7 +7,6 @@ let sequelize = require("./database/Db");
 const MySQL = require("./routes/MySQL");
 let Incident = require("./model/Incident");
 let Logged = require("./model/LoggedTest");
-const { INTEGER } = require("sequelize/types");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,9 +42,11 @@ MongoClient.connect(
     //     res.send("Hello World, Incident MongoToReact");
     //     return rule;
     //   });
-    //   const rule = rules.incidentValue;
-    //   console.log(rules);
-    //   console.log("rule 2 :" + rule);
+    //   let rule = rules.incidentValue;
+    //   let ruleInt = Number(rule);
+    //   console.log("rule 2 :" + rule + "INT : " + ruleInt);
+    //   console.log(typeof ruleInt);
+    //   console.log(typeof rule);
     // });
     app.post("/fetchData", async (req, res) => {
       try {
@@ -57,9 +58,10 @@ MongoClient.connect(
           return rule;
         });
         const rule = rules.incidentValue;
-        // const ruleInt = parseINT(rule);
-        // const RPM = parseINT(req.body.kc);
-        if (req.body.kc > rule) {
+        const ruleInt = Number(rule);
+        const kc = Number(req.body.kc);
+        const RPM = kc;
+        if (RPM > ruleInt) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
             long: req.body.kff1005,
@@ -76,8 +78,8 @@ MongoClient.connect(
           console.log("Error cannot Created : RPM less than incident:1000");
         }
 
-        console.log("kc : " + req.body.kc);
-        console.log("rule : " + rule);
+        console.log("kc : " + RPM);
+        console.log("rule : " + ruleInt);
         res.send("ok record Logged");
       } catch (e) {
         console.log(e);
