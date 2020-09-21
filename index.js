@@ -42,13 +42,14 @@ MongoClient.connect(
           return rule;
         });
 
-        if (req.body.kc >= rules.incidentValue) {
+        if (req.body.kc >= rules) {
           const logged = await Logged.create({
             lat: req.body.kff1006,
             long: req.body.kff1005,
             time: req.body.time,
             RPM: req.body.kc,
           });
+          console.log(rules);
           // console.log(req.body);
           if (!logged) {
             res.send("error cannot create logged");
