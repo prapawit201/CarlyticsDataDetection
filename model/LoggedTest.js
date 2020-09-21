@@ -16,9 +16,9 @@ const LoggedTest = db.define(
     long: {
       type: Sequelize.STRING,
     },
-    speed: {
-      type: Sequelize.STRING,
-    },
+    // speed: {
+    //   type: Sequelize.STRING,
+    // },
     RPM: {
       type: Sequelize.STRING,
     },
