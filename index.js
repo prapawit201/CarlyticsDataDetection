@@ -82,15 +82,16 @@ MongoClient.connect(
           if (!logged) {
             res.send("error cannot create logged");
           }
-        } else if (RPMint < ruleInt) {
+        } else if (SpeedInt < ruleInt) {
           // console.log("Error cannot Created : RPM less than incident:1000");
           console.log("Error cannot Created : Speed less than incident : 40");
         } else {
           console.log("Error cannot Created");
         }
-
-        console.log("kc : " + RPMint + " : " + typeof RPMint);
+        console.log("kd : " + SpeedInt + " : " + typeof SpeedInt);
         console.log("rule : " + ruleInt + " : " + typeof ruleInt);
+        // console.log("kc : " + RPMint + " : " + typeof RPMint);
+        // console.log("rule : " + ruleInt + " : " + typeof ruleInt);
         res.send("ok record Logged");
       } catch (e) {
         console.log(e);
