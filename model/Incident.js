@@ -16,6 +16,9 @@ const Incident = db.define(
     incidentValue: {
       type: Sequelize.STRING,
     },
+    incidentRPM:{
+      type : Sequelize.STRING,
+    },
     enterpriseId: {
       type: Sequelize.STRING,
     },

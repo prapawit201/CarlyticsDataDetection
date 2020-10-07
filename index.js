@@ -60,12 +60,16 @@ MongoClient.connect(
           return rule;
         });
         let rule = rules.incidentValue;
+        let ruleRPM = rules.incidentRPM;
+
         let ruleInt = parseFloat(rule);
+        let ruleRPMInt = parseFloat(ruleRPM);
         // let kc = parseFloat(req.body.kc); = RPM
         let kd = parseFloat(req.body.kd);
-
+        let kc = parseFloat(req.body.kc);
         // let RPMint = kc;
         let SpeedInt = kd;
+        let RPMInt = kc;
 
         if (SpeedInt > ruleInt) {
           const logged = await Logged.create({
@@ -76,7 +80,7 @@ MongoClient.connect(
             Speed: req.body.kd,
           });
           // console.log("CreatedSuccess : RPM more than incident:1000");
-          console.log("CreatedSuccess : Speed more than incident : 40");
+          console.log("Created Success : Speed "+SpeedInt+" more than incident : "+ruleInt);
 
           // console.log(req.body);
           if (!logged) {
@@ -84,14 +88,17 @@ MongoClient.connect(
           }
         } else if (SpeedInt < ruleInt) {
           // console.log("Error cannot Created : RPM less than incident:1000");
-          console.log("Error cannot Created : Speed less than incident : 40");
+          console.log("Created Error : Speed "+ SpeedInt +" less than incident : "+ ruleInt);
+        } if (RPMInt > ruleRPMInt) {
+          console.log("Created Success : RPM "+ RPMInt +" more than RPM Incident : " + ruleRPMInt);
         } else {
           console.log("Error cannot Created");
+          console.log(req.body);
         }
-        console.log("kd : " + SpeedInt + " : " + typeof SpeedInt);
-        console.log("rule : " + ruleInt + " : " + typeof ruleInt);
-        // console.log("kc : " + RPMint + " : " + typeof RPMint);
+        // console.log("kd : " + SpeedInt + " : " + typeof SpeedInt);
         // console.log("rule : " + ruleInt + " : " + typeof ruleInt);
+        console.log("RPM KC : " + RPMInt + " : " + typeof RPMInt);
+        console.log("rule RPM : " + ruleRPMInt + " : " + typeof ruleRPMInt);
         res.send("ok record Logged");
       } catch (e) {
         console.log(e);
