@@ -7,6 +7,8 @@ let sequelize = require("./database/Db");
 const MySQL = require("./routes/MySQL");
 let Incident = require("./model/Incident");
 let Logged = require("./model/LoggedTest");
+const { json } = require("body-parser");
+const e = require("express");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,54 +53,88 @@ MongoClient.connect(
 
     app.post("/fetchData", async (req, res) => {
       try {
-        const rules = await Incident.findOne({
+        const rules = await Incident.findAll({
           where: {
             // incidentName: "RPM",
-            incidentName: "Speed",
+            incidentName: ["RPM", "Speed"],
           },
         }).then((rule) => {
+          console.log("object rule : " + rule.length);
+          console.log("New rules : ", JSON.parse(JSON.stringify(rule)));
+          rule = JSON.parse(JSON.stringify(rule));
           return rule;
         });
-        let rule = rules.incidentValue;
-        let ruleRPM = rules.incidentRPM;
 
-        let ruleInt = parseFloat(rule);
-        let ruleRPMInt = parseFloat(ruleRPM);
         // let kc = parseFloat(req.body.kc); = RPM
         let kd = parseFloat(req.body.kd);
         let kc = parseFloat(req.body.kc);
         // let RPMint = kc;
         let SpeedInt = kd;
         let RPMInt = kc;
+        let logged;
+        for (let index = 0; index < rules.length; index++) {
+          let rule = rules[index].incidentValue;
+          // let ruleRPM = rules[index].incidentRPM;
+          let ruleInt = parseFloat(rule);
+          // let ruleRPMInt = parseFloat(ruleRPM);
 
-        if (SpeedInt > ruleInt) {
-          const logged = await Logged.create({
-            lat: req.body.kff1006,
-            long: req.body.kff1005,
-            time: req.body.time,
-            RPM: req.body.kc,
-            Speed: req.body.kd,
-          });
-          // console.log("CreatedSuccess : RPM more than incident:1000");
-          console.log("Created Success : Speed "+SpeedInt+" more than incident : "+ruleInt);
+          let incidentname = rules[index].incidentName;
+          if (incidentname == "Speed") {
+            console.log("1");
+            if (SpeedInt > ruleInt) {
+              logged = await Logged.create({
+                lat: req.body.kff1006,
+                long: req.body.kff1005,
+                time: req.body.time,
+                RPM: req.body.kc,
+                Speed: req.body.kd,
+              });
 
-          // console.log(req.body);
-          if (!logged) {
-            res.send("error cannot create logged");
+              // console.log("CreatedSuccess : RPM more than incident:1000");
+              console.log(
+                "Created Success : Speed " +
+                  SpeedInt +
+                  " more than incident : " +
+                  ruleInt
+              );
+              break;
+            } else if (SpeedInt < ruleInt) {
+              console.log("2");
+              // console.log("Error cannot Created : RPM less than incident:1000");
+              console.log(
+                "Created Error : Speed " +
+                  SpeedInt +
+                  " less than incident : " +
+                  ruleInt
+              );
+            }
+          } else if (incidentname == "RPM") {
+            console.log("3");
+            if (RPMInt > ruleInt) {
+              console.log("4");
+              //อย่าลิท create log
+              console.log(
+                "Created Success : RPM " +
+                  RPMInt +
+                  " more than RPM Incident : " +
+                  ruleInt
+              );
+              break;
+            }
+          } else {
+            console.log("5");
+            console.log("Error cannot Created");
+            console.log(req.body);
           }
-        } else if (SpeedInt < ruleInt) {
-          // console.log("Error cannot Created : RPM less than incident:1000");
-          console.log("Created Error : Speed "+ SpeedInt +" less than incident : "+ ruleInt);
-        } if (RPMInt > ruleRPMInt) {
-          console.log("Created Success : RPM "+ RPMInt +" more than RPM Incident : " + ruleRPMInt);
-        } else {
-          console.log("Error cannot Created");
-          console.log(req.body);
         }
+
         // console.log("kd : " + SpeedInt + " : " + typeof SpeedInt);
         // console.log("rule : " + ruleInt + " : " + typeof ruleInt);
-        console.log("RPM KC : " + RPMInt + " : " + typeof RPMInt);
-        console.log("rule RPM : " + ruleRPMInt + " : " + typeof ruleRPMInt);
+        // console.log("RPM KC : " + RPMInt + " : " + typeof RPMInt);
+        // console.log("rule RPM : " + ruleRPMInt + " : " + typeof ruleRPMInt);
+        if (!logged) {
+          return res.send("error cannot create logged");
+        }
         res.send("ok record Logged");
       } catch (e) {
         console.log(e);
