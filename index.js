@@ -35,22 +35,6 @@ MongoClient.connect(
         });
     });
 
-    // app.get("/getdata", async (req, res) => {
-    //   const rules = await Incident.findOne({
-    //     where: {
-    //       incidentName: "RPM",
-    //     },
-    //   }).then((rule) => {
-    //     res.send("Hello World, Incident MongoToReact");
-    //     return rule;
-    //   });
-    //   let rule = rules.incidentValue;
-    //   let ruleInt = parseFloat(rule);
-    //   console.log("rule 2 :" + rule + "INT : " + ruleInt);
-    //   console.log(typeof ruleInt);
-    //   console.log(typeof rule);
-    // });
-
     app.post("/fetchData", async (req, res) => {
       console.log("test");
       try {
@@ -96,7 +80,7 @@ MongoClient.connect(
               console.log(
                 "Created Success : Speed " +
                   SpeedInt +
-                  " more than incident : " +
+                  " more than Incident Speed : " +
                   ruleInt
               );
               break;
@@ -110,7 +94,7 @@ MongoClient.connect(
                   ruleInt
               );
             }
-          } else if (incidentname == "RPM") {
+          } if (incidentname == "RPM") {
             console.log("3");
             if (RPMInt > ruleInt) {
               console.log("4");
