@@ -57,7 +57,7 @@ MongoClient.connect(
         const rules = await Incident.findAll({
           where: {
             // incidentName: "RPM",
-            incidentName: ["RPM", "Speed"],
+            incidentName: ["Speed","RPM"],
           },
         }).then((rule) => {
           console.log("object rule : " + rule.length);
