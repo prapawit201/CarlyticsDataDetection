@@ -25,6 +25,9 @@ const LoggedTest = db.define(
     time: {
       type: Sequelize.STRING,
     },
+    IncidentType: {
+      type: Sequelize.STRING,
+    }
   },
   {
     freezeTableName: true,

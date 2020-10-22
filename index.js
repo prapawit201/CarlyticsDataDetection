@@ -52,6 +52,7 @@ MongoClient.connect(
     // });
 
     app.post("/fetchData", async (req, res) => {
+      console.log("test");
       try {
         const rules = await Incident.findAll({
           where: {
@@ -88,6 +89,7 @@ MongoClient.connect(
                 time: req.body.time,
                 RPM: req.body.kc,
                 Speed: req.body.kd,
+                IncidentType: rules[index].incidentName
               });
 
               // console.log("CreatedSuccess : RPM more than incident:1000");
@@ -112,7 +114,14 @@ MongoClient.connect(
             console.log("3");
             if (RPMInt > ruleInt) {
               console.log("4");
-              //อย่าลิท create log
+              logged = await Logged.create({
+                lat: req.body.kff1006,
+                long: req.body.kff1005,
+                time: req.body.time,
+                RPM: req.body.kc,
+                Speed: req.body.kd,
+                IncidentType: rules[index].incidentName
+              })
               console.log(
                 "Created Success : RPM " +
                   RPMInt +
