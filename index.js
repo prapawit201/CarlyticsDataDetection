@@ -41,7 +41,7 @@ MongoClient.connect(
         const rules = await Incident.findAll({
           where: {
             // incidentName: "RPM",
-            incidentName: ["Speed","RPM"],
+            incidentName: ["Speed","RPM","EngineLoad"],
           },
         }).then((rule) => {
           console.log("object rule : " + rule.length);
@@ -53,9 +53,11 @@ MongoClient.connect(
         // let kc = parseFloat(req.body.kc); = RPM
         let kd = parseFloat(req.body.kd);
         let kc = parseFloat(req.body.kc);
+        let k4 = parseFloat(req.body.k4);
         // let RPMint = kc;
         let SpeedInt = kd;
         let RPMInt = kc;
+        let EngineLoadInt = k4;
         let logged;
         for (let index = 0; index < rules.length; index++) {
           let rule = rules[index].incidentValue;
@@ -73,6 +75,7 @@ MongoClient.connect(
                 time: req.body.time,
                 RPM: req.body.kc,
                 Speed: req.body.kd,
+                EngineLoad: req.body.k4,
                 IncidentType: rules[index].incidentName
               });
 
@@ -104,6 +107,7 @@ MongoClient.connect(
                 time: req.body.time,
                 RPM: req.body.kc,
                 Speed: req.body.kd,
+                EngineLoad: req.body.k4,
                 IncidentType: rules[index].incidentName
               })
               console.log(
@@ -119,6 +123,31 @@ MongoClient.connect(
             console.log("Error cannot Created");
             console.log(req.body);
           }
+        }if (incidentname == "EngineLoad") {
+          console.log("3");
+          if (EngineLoadInt > ruleInt) {
+            console.log("4");
+            logged = await Logged.create({
+              lat: req.body.kff1006,
+              long: req.body.kff1005,
+              time: req.body.time,
+              RPM: req.body.kc,
+              Speed: req.body.kd,
+              EngineLoad: req.body.k4,
+              IncidentType: rules[index].incidentName
+            })
+            console.log(
+              "Created Success : EngineLoad " +
+              EngineLoadInt +
+                " more than EngineLoad Incident : " +
+                ruleInt
+            );
+            break;
+          }
+        } else {
+          console.log("5");
+          console.log("Error cannot Created");
+          console.log(req.body);
         }
 
         // console.log("kd : " + SpeedInt + " : " + typeof SpeedInt);
