@@ -142,7 +142,7 @@ MongoClient.connect(
                 " more than EngineLoad Incident : " +
                 ruleInt
             );
-            break;
+            // break;
           }
         } else {
           console.log("5");
