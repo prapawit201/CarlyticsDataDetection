@@ -22,9 +22,6 @@ const Car = db.define(
     brandId: {
       type: Sequelize.STRING,
     },
-    driverId: {
-      type: Sequelize.STRING,
-    },
     modelId: {
       type: Sequelize.STRING,
     },
