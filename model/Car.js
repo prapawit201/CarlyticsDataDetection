@@ -1,38 +1,44 @@
-const Sequelize = require("sequelize");
 const db = require("../database/Db");
+const Sequelize = require("sequelize");
 
-const LoggedTest = db.define(
-  "LoggedTest",
+const Car = db.define(
+  "Car",
   {
-    LoggedId: {
+    carId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    obdId:{
+    chasisNo: {
       type: Sequelize.STRING,
     },
-    lat: {
+    plateNo: {
       type: Sequelize.STRING,
     },
-    long: {
+    obdId: {
       type: Sequelize.STRING,
     },
-    Speed: {
+    brandId: {
       type: Sequelize.STRING,
     },
-    RPM: {
+    driverId: {
       type: Sequelize.STRING,
     },
-    time: {
+    modelId: {
       type: Sequelize.STRING,
     },
-    IncidentType: {
+    year: {
       type: Sequelize.STRING,
     },
-    enterpriseId:{
+    image: {
       type: Sequelize.STRING,
+    },
+    enterpriseId: {
+      type: Sequelize.STRING,
+    },
+    status:{
+      type: Sequelize.INTEGER,
     }
   },
   {
@@ -40,4 +46,4 @@ const LoggedTest = db.define(
     timestamps: false,
   }
 );
-module.exports = LoggedTest;
+module.exports = Car;
